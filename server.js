@@ -3,6 +3,7 @@
 const express = require('express');
 const hbs = require('hbs'); //handlebar
 const fs = require('fs');
+const port = process.env.PORT || 3000;// choose the deploy enviroment port number.
 /**************************************/
 let app = express();  
 hbs.registerPartials(__dirname +'/views/partials')
@@ -13,20 +14,16 @@ app.set('view engine', 'hbs');
 /**************************************/
 /* 
 Middleware just sits between a request and the router handler. So a normal request without middleware would go:
-
 request --> router handler
-
 With middleware it goes:
-
 request --> middleware1 --> middleware2 --> etc... --> router handler
-
 Middleware typically modifies some part of the request and passes it on to the next middleware. The last middleware in the chain passes it to the router handler. 
  */
 // this middleware shows how server is working.
 app.use((req, res, next) => {
     // console.log(res);
     let now = new Date().toString(); // return a human readable time stamp
-    let log = `${now}: ${req.method} ${req.url}`
+    let log = `${now}: ${req.method} ${req.url}`;
     console.log(log);
     // must included a callback err handling function. 
     fs.appendFile('server.log', log+'\n', (err) => {
@@ -86,8 +83,6 @@ app.get('/bad', (req, res) => {
 });
 /**************************************/
 // second argument function is optional. 
-app.listen(3000, () => {
-    console.log('server is up on port 3000');
+app.listen(port, () => {
+    console.log('server is up on port' + port);
 });
-
-
