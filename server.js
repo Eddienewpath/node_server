@@ -53,6 +53,13 @@ hbs.registerHelper('screamIt', (text) => {
 /*****************************************/
 // set up route
 // function argument is a request handler
+app.get('/project', (req, res) => {
+    res.render('project.hbs', {
+        pageTitle: 'Project',
+        projDescrip: 'this is a personal project'
+    });
+});
+
 app.get('/', (req, res) => {
     // res.send('<h1>hello express</h1>');
     // res.send({
